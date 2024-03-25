@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int rreshta, i, j, k;
+
+    printf("Shkruaj numrin e rreshtave: ");
+    scanf("%d", &rreshta);
+
+    for (i = 1; i <= rreshta; ++i) {
+        for (j = 1; j <= rreshta - i; ++j) {
+            printf(" ");
+        }
+
+        for (k = 1; k <= i; ++k) {
+            printf("*");
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
