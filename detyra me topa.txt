@@ -1,0 +1,69 @@
+#include <stdio.h>
+void resetXs(int *x1, int *x2, int *x3);
+int simulateHedhja(int hyrja, int x1, int x2, int x3, int *newX1, int *newX2, int *newX3);
+int main() {
+    int n, pikeTotale = 0;
+    int x1 = 0, x2 = 0, x3 = 1; 
+    int newX1, newX2, newX3;
+    printf("Shkruani numrin e hedhjeve te njepasnjeshme: ");
+    scanf("%d", &n);
+
+    printf("Hedhja 1: Nuk ka pike\n");
+    for (int i = 2; i <= n; i++) {
+        int portaHyrese;
+        printf("Shkruani porten hyrese te topit  (1 per porten A, 2 per porten B): ");
+        scanf("%d", &portaHyrese);
+
+        int pikeTeFituara = simulateHedhja(portaHyrese, x1, x2, x3, &newX1, &newX2, &newX3);
+        resetXs(&x1, &x2, &x3);
+        x1 = newX1;
+        x2 = newX2;
+        x3 = newX3;
+        pikeTotale += pikeTeFituara;
+        printf("Throw %d: %s\n", i, pikeTeFituara ? "1 pike" : "Nuk ka pike");
+    }
+    printf("Piket totale: %d\n", pikeTotale);
+    return 0;
+}
+void resetXs(int *x1, int *x2, int *x3) {
+    *x1 = 0;
+    *x2 = 0;
+    *x3 = 1;
+}
+int simulateHedhja(int portaHyrese, int x1, int x2, int x3, int *newX1, int *newX2, int *newX3) {
+    int pikeTeFituara = 0;
+    switch (portaHyrese) {
+        case 1:  // Hyn ne porten A
+            if (x1 == 0) {
+                *newX1 = 1;
+                pikeTeFituara = 0;
+            } else {
+                *newX1 = 0;
+                pikeTeFituara = 1;
+            }
+            *newX2 = x2;
+            *newX3 = x3;
+            break;
+        case 2:  // Hyn ne porten B
+            *newX1 = x1;
+            if (x3 == 0) {
+                *newX3 = 1;
+            } else {
+                *newX3 = 0;
+            }
+            if (x2 == 0 && x2 == 0) {
+                *newX2 = 1;
+                pikeTeFituara = 0;
+            } else if (x2 == 1 && x2 == 1) {
+                *newX2 = 0;
+                pikeTeFituara = 1;
+            } else {
+                *newX2 = x2;
+            }
+            break;
+        default:
+            printf("Piket e hyrjes nuk funksionojne!\n");
+            break;
+    }
+    return pikeTeFituara;
+}
